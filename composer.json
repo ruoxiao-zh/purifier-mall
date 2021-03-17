@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "codingyu/ueditor": "^3.0",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.4",
         "intervention/image": "^2.5",
+        "laravel-admin-ext/wang-editor": "1.*",
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5"
     },

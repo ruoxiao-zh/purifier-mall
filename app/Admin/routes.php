@@ -15,4 +15,9 @@ Route::group([
 
     // 轮播图
     $router->resource('slideshows', SlideshowController::class);
+    // 公司
+    $router->resource('companies', CompanyController::class);
+
+    // 富文本编辑器图片上传
+    $router->post('editor/upload', 'EditorUploadImageController@upload');
 });

@@ -63,7 +63,7 @@ class SlideshowController extends AdminController
     {
         $form = new Form(new Slideshow());
 
-        $form->image('url_path', __('轮播图预览'))->rules('mimes:png,gif,jpeg,jpg')
+        $form->image('url_path', __('轮播图预览'))->rules('required|mimes:png,gif,jpeg,jpg')
             ->uniqueName()->removable()->downloadable();
         $form->text('sort', __('排序'))->default(100);
 
