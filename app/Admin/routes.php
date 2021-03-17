@@ -13,4 +13,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
+    // 轮播图
+    $router->resource('slideshows', SlideshowController::class);
 });
