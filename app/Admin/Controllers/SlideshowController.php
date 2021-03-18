@@ -2,10 +2,10 @@
 
 namespace App\Admin\Controllers;
 
-use App\Slideshow;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Models\Slideshow;
 use Encore\Admin\Controllers\AdminController;
 
 class SlideshowController extends AdminController

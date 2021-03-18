@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Company;
+use App\Models\Company;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -15,7 +15,7 @@ class CompanyController extends AdminController
      *
      * @var string
      */
-    protected $title = '公司管理';
+    protected $title = '公司';
 
     /**
      * Make a grid builder.

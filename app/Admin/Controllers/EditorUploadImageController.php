@@ -2,9 +2,9 @@
 
 namespace App\Admin\Controllers;
 
-use Encore\Admin\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Encore\Admin\Controllers\AdminController;
 
 class EditorUploadImageController extends AdminController
 {
