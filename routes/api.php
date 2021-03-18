@@ -31,6 +31,9 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
     // 省钱小技巧
     $api->get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
     $api->get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
+
+    // 短信
+    $api->post('message-codes', 'MessageCodeController@store')->name('message-codes.store');
 });
 
 Route::fallback(function () {
