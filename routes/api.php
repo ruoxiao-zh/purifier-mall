@@ -28,6 +28,9 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
     Route::get('slideshows', 'SlideshowController@index')->name('slideshows.index');
     // 公司详情
     Route::get('companies/{company}', 'CompanyController@show')->name('companies.index');
+    // 省钱小技巧
+    Route::get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
+    Route::get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
 });
 
 Route::fallback(function () {
