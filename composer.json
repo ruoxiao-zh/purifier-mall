@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "barryvdh/laravel-cors": "^2.0",
+        "bensampo/laravel-enum": "~1.38",
         "codingyu/ueditor": "^3.0",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.4",
