@@ -21,7 +21,8 @@
         "overtrue/laravel-wechat": "^5.1",
         "overtrue/wechat": "~4.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
-        "spatie/laravel-tail": "^3.3"
+        "spatie/laravel-tail": "^3.3",
+        "yansongda/laravel-pay": "^2.3"
     },
     "require-dev": {
         "facade/ignition": "^1.16.4",
