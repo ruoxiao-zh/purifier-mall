@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Slideshow;
+use App\Models\Slideshow;
 use Faker\Generator as Faker;
 
 $factory->define(Slideshow::class, function (Faker $faker) {

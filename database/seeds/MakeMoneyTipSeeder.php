@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CompanySeeder extends Seeder
+class MakeMoneyTipSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Company::class)->times(1)->create();
+        factory(\App\Models\MakeMoneyTip::class)->times(100)->create();
     }
 }

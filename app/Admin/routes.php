@@ -17,6 +17,8 @@ Route::group([
     $router->resource('slideshows', SlideshowController::class);
     // 公司
     $router->resource('companies', CompanyController::class);
+    // 赚钱小技巧
+    $router->resource('make-money-tips', MakeMoneyTipController::class);
 
     // 富文本编辑器图片上传
     $router->post('editor/upload', 'EditorUploadImageController@upload');

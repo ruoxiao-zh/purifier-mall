@@ -12,7 +12,7 @@ class EditorUploadImageController extends AdminController
 
     public function upload(Request $request)
     {
-        $folder_name = "uploads/editor/" . date("Ym", time()) . '/' . date("d", time()) . '/';
+        $folder_name = "uploads/editor/" . date("Y", time()) . '/' . date("m", time()) . '/' . date("d", time()) . '/';
 
         $upload_path = public_path() . '/' . $folder_name;
         $urls = [];

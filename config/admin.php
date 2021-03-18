@@ -400,7 +400,7 @@ return [
             'enable' => true,
             // 编辑器的配置
             'config' => [
-                'uploadImgServer' => '/admin/editor/upload'
+                'uploadImgServer' => '/admin/editor/upload',
             ]
         ],
         'ueditor' => [

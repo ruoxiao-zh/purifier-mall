@@ -11,6 +11,6 @@ class SlideshowSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Slideshow::class)->times(100)->create();
+        factory(\App\Models\Slideshow::class)->times(100)->create();
     }
 }
