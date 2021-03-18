@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Slideshow;
+use App\Models\Slideshow;
 use Illuminate\Http\Request;
 use App\Http\Resources\SlideshowResource;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Company;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Resources\CompanyResource;
 
