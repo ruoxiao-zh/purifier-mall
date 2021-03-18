@@ -17,6 +17,8 @@
         "laravel-admin-ext/wang-editor": "1.*",
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5",
+        "overtrue/laravel-wechat": "^5.1",
+        "overtrue/wechat": "~4.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-tail": "^3.3"
     },
