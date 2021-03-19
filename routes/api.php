@@ -18,12 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->group(function ($api) {
-//    Route::get('version', function() {
-//        // abort(403, 'test');
-//
-//        return 'this is version v1';
-//    })->name('version');
-
     // 轮播图列表
     $api->get('slideshows', 'SlideshowController@index')->name('slideshows.index');
     // 公司详情
@@ -32,8 +26,10 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
     $api->get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
     $api->get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
 
-    // 短信
-    $api->post('message-codes', 'MessageCodeController@store')->name('message-codes.store');
+    Route::middleware(['throttle:' . config('api.rate_limits.sign')])->group(function ($api) {
+        // 短信
+        $api->post('message-codes', 'MessageCodeController@store')->name('message-codes.store');
+    });
 });
 
 Route::fallback(function () {
