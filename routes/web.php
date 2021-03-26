@@ -15,5 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('phpinfo', function () {
+    echo phpinfo();
+});
+
 // 日志查看
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
