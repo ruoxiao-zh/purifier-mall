@@ -33,5 +33,5 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 });
 
 Route::fallback(function () {
-    return response()->json(['message' => 'Not Found. Please check your request url!'], 404);
+    return response()->json(['message' => '404 Not Found. Please check your request url!'], 404);
 });
