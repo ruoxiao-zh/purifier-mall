@@ -22,4 +22,7 @@ Route::group([
 
     // 富文本编辑器图片上传
     $router->post('editor/upload', 'EditorUploadImageController@upload');
+
+    // 商品
+    $router->resource('products', ProductsController::class);
 });
