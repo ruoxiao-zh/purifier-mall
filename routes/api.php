@@ -30,6 +30,14 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         $api->get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
         $api->get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
 
+        // 用户注册
+        $api->post('users', 'UsersController@store')->name('users.store');
+        // 登录
+        $api->post('authorizations', 'AuthorizationsController@store')->name('api.authorizations.store');
+        // 刷新token
+        $api->put('authorizations/current', 'AuthorizationsController@update')->name('authorizations.update');
+        // 删除token
+        $api->delete('authorizations/current', 'AuthorizationsController@destroy')->name('authorizations.destroy');
 
         //******************** 登录之后才能访问的接口 ********************
         // Route::middleware('auth:api')->group(function ($api) {
