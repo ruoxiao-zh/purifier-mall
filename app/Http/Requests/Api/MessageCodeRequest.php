@@ -14,4 +14,11 @@ class MessageCodeRequest extends FormRequest
             ],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'phone' => '手机号',
+        ];
+    }
 }
