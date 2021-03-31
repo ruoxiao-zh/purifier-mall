@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->group(function ($api) {
 
-    Route::middleware('throttle:' . config('api.rate_limits.sign'))->group(function ($api) {
+    Route::middleware('throttle:' . config('api.rate_limits.access'))->group(function ($api) {
         //******************** 无需登录可以访问的接口 ********************
         // 轮播图列表
         $api->get('slideshows', 'SlideshowController@index')->name('slideshows.index');
@@ -29,6 +29,12 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         // 省钱小技巧
         $api->get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
         $api->get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
+
+        // 商品列表
+        $api->get('products', 'ProductController@index')->name('products.index');
+        // 商品详情
+        $api->get('products/{product}', 'ProductController@show')->name('products.show');
+
 
         // 用户注册
         $api->post('users', 'UsersController@store')->name('users.store');

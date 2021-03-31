@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    protected $hidden = ['deleted_at'];
+
     public function scopeRecent($query)
     {
         return $query->orderBy('id', 'desc');
