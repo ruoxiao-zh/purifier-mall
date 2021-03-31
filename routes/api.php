@@ -46,10 +46,17 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')->name('authorizations.destroy');
 
         //******************** 登录之后才能访问的接口 ********************
-        // Route::middleware('auth:api')->group(function ($api) {
+        Route::middleware('auth:api')->group(function ($api) {
             // 用户地址
             $api->resource('user-addresses', 'UserAddressController');
-        // });
+
+            // 购物车列表
+            $api->get('cart-items', 'CartController@index')->name('cart-items.index');
+            // 添加商品到购物车
+            $api->post('cart-items', 'CartController@store')->name('cart-items.store');
+            // 删除购物车里边的商品
+            $api->delete('cart-items/{productSku}', 'CartController@destroy')->name('cart-items.destroy');
+        });
     });
 
     Route::middleware(['throttle:' . config('api.rate_limits.sign')])->group(function ($api) {
