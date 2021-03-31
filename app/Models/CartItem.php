@@ -18,11 +18,6 @@ class CartItem extends BaseModel
         return $this->belongsTo(ProductSku::class);
     }
 
-    public function product()
-    {
-        return $this->hasOneThrough(Product::class, ProductSku::class);
-    }
-
     public function scopeLoadingWith($query)
     {
         return $query->with(['user', 'productSku.product']);
