@@ -25,4 +25,8 @@ Route::group([
 
     // 商品
     $router->resource('products', ProductsController::class);
+
+    // 订单
+    $router->resource('orders', OrdersController::class);
+    $router->post('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship');
 });
