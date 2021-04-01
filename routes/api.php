@@ -66,6 +66,9 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
             $api->get('orders/{order}', 'OrdersController@show')->name('orders.show');
             // 删除订单
             $api->delete('orders', 'OrdersController@destroy')->name('orders.destroy');
+
+            // 支付
+            $api->get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
         });
     });
 
@@ -74,6 +77,9 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         $api->post('message-codes', 'MessageCodeController@store')->name('message-codes.store');
     });
 });
+
+// 微信支付回调
+Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
 
 Route::fallback(function () {
     return response()->json(['message' => '404 Not Found. Please check your request url!'], HttpCodeEnum::HTTP_CODE_404);
