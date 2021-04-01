@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
 use App\Http\Requests\Api\AuthorizationRequest;
@@ -21,7 +22,7 @@ class AuthorizationController extends Controller
             throw new AuthenticationException(trans('auth.failed'));
         }
 
-        return $this->respondWithToken($token)->setStatusCode(201);
+        return $this->respondWithToken($token)->setStatusCode(HttpCodeEnum::HTTP_CODE_201);
     }
 
     public function update(): object
@@ -35,7 +36,7 @@ class AuthorizationController extends Controller
     {
         auth('api')->logout();
 
-        return response(null, 204);
+        return response(null, HttpCodeEnum::HTTP_CODE_204);
     }
 
     protected function respondWithToken(string $token): object

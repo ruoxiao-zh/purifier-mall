@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ProductOnSaleStatus;
+use App\Enums\ProductOnSaleStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends BaseModel
@@ -25,6 +25,6 @@ class Product extends BaseModel
 
     public function scopeOnSale($query)
     {
-        return $query->where('on_sale', ProductOnSaleStatus::IS_ON_SALE);
+        return $query->where('on_sale', ProductOnSaleStatusEnum::IS_ON_SALE);
     }
 }

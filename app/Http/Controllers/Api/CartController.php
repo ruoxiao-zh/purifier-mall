@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\HttpCodeEnum;
 use App\Models\CartItem;
 use App\Models\ProductSku;
 use Illuminate\Http\Request;
@@ -31,13 +32,13 @@ class CartController extends Controller
             $cart->save();
         }
 
-        return (new CartResource($cart))->response()->setStatusCode(201);
+        return (new CartResource($cart))->response()->setStatusCode(HttpCodeEnum::HTTP_CODE_201);
     }
 
     public function destory(ProductSku $productSku, Request $request)
     {
         $request->user()->cartItems()->where('product_sku_id', $productSku->id)->delete();
 
-        return response(null, 204);
+        return response(null, HttpCodeEnum::HTTP_CODE_204);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\HttpCodeEnum;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Overtrue\EasySms\EasySms;
@@ -37,6 +38,6 @@ class MessageCodeController extends Controller
         return response()->json([
             'key'        => $key,
             'expired_at' => $expiredAt->toDateTimeString(),
-        ])->setStatusCode(201);
+        ])->setStatusCode(HttpCodeEnum::HTTP_CODE_201);
     }
 }

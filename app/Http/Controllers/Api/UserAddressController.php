@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\HttpCodeEnum;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserAddressResource;
@@ -27,7 +28,7 @@ class UserAddressController extends Controller
             'contact_phone',
         ]));
 
-        return (new UserAddressResource($userAddress))->response()->setStatusCode(201);
+        return (new UserAddressResource($userAddress))->response()->setStatusCode(HttpCodeEnum::HTTP_CODE_201);
     }
 
     public function show(UserAddress $userAddress): JsonResource
@@ -58,6 +59,6 @@ class UserAddressController extends Controller
 
         $userAddress->delete();
 
-        return response(null, 204);
+        return response(null, HttpCodeEnum::HTTP_CODE_204);
     }
 }
