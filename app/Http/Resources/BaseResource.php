@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
-class MakeMoneyTipResource extends BaseResource
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class BaseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -10,7 +12,7 @@ class MakeMoneyTipResource extends BaseResource
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request): array
+    public function toArray($request)
     {
         return parent::toArray($request);
     }

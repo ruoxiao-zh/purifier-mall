@@ -2,10 +2,7 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class ProductResource extends JsonResource
+class ProductResource extends BaseResource
 {
     protected $showSkus = false;
 
@@ -26,19 +23,10 @@ class ProductResource extends JsonResource
         return $data;
     }
 
-    public function showSkus(): JsonResource
+    public function showSkus(): self
     {
         $this->showSkus = true;
 
         return $this;
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Illuminate\Http\JsonResponse $response
-     */
-    public function withResponse($request, $response)
-    {
-        $response->header('X-Value', 'True');
     }
 }
