@@ -90,4 +90,9 @@ class Order extends BaseModel
 
         return false;
     }
+
+    public function scopeLoadingWith($query)
+    {
+        return $query->with(['items.product', 'items.productSku']);
+    }
 }

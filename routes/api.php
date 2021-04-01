@@ -60,6 +60,12 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 
             // 下单
             $api->post('orders', 'OrdersController@store')->name('orders.store');
+            // 订单列表
+            $api->get('orders', 'OrdersController@index')->name('orders.index');
+            // 订单详情
+            $api->get('orders/{order}', 'OrdersController@show')->name('orders.show');
+            // 删除订单
+            $api->delete('orders', 'OrdersController@destroy')->name('orders.destroy');
         });
     });
 

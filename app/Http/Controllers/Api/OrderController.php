@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\HttpCodeEnum;
 use App\Models\Order;
+use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
 use App\Services\Order\OrderService;
 use App\Http\Resources\OrderResource;
@@ -28,6 +28,24 @@ class OrderController extends Controller
 
     public function show(Order $order): JsonResource
     {
-        return new OrderResource($order);
+        $this->authorize('own', $order);
+
+        return new OrderResource($order->loadingWith());
+    }
+
+    public function index(Request $request)
+    {
+        return OrderResource::collection(Order::loadingWith()->where('user_id', $request->user()->id)
+            ->recent()
+            ->paginate());
+    }
+
+    public function destroy(Order $order)
+    {
+        $this->authorize('own', $order);
+
+        $order->delete();
+
+        return response(null, HttpCodeEnum::HTTP_CODE_204);
     }
 }
