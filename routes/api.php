@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,9 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
             $api->post('cart-items', 'CartController@store')->name('cart-items.store');
             // 删除购物车里边的商品
             $api->delete('cart-items/{productSku}', 'CartController@destroy')->name('cart-items.destroy');
+
+            // 下单
+            $api->post('orders', 'OrdersController@store')->name('orders.store');
         });
     });
 
@@ -66,5 +70,5 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 });
 
 Route::fallback(function () {
-    return response()->json(['message' => '404 Not Found. Please check your request url!'], 404);
+    return response()->json(['message' => '404 Not Found. Please check your request url!'], HttpCodeEnum::HTTP_CODE_404);
 });

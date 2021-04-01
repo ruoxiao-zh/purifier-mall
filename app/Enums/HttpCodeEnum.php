@@ -4,6 +4,12 @@ namespace App\Enums;
 
 use BenSampo\Enum\Enum;
 
+/**
+ * http 状态码
+ *
+ * Class HttpCodeEnum
+ * @package App\Enums
+ */
 final class HttpCodeEnum extends Enum
 {
     /**
@@ -87,5 +93,8 @@ final class HttpCodeEnum extends Enum
      */
     public const HTTP_CODE_429 = 429;
 
+    /**
+     * 服务器内部错误
+     */
     public const HTTP_CODE_500 = 500;
 }
