@@ -38,13 +38,13 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 
 
         // 用户注册
-        $api->post('users', 'UsersController@store')->name('users.store');
+        // $api->post('users', 'UserController@store')->name('users.store');
         // 登录
-        $api->post('authorizations', 'AuthorizationsController@store')->name('api.authorizations.store');
+        $api->post('authorizations', 'AuthorizationController@store')->name('api.authorizations.store');
         // 刷新token
-        $api->put('authorizations/current', 'AuthorizationsController@update')->name('authorizations.update');
+        $api->put('authorizations/current', 'AuthorizationController@update')->name('authorizations.update');
         // 删除token
-        $api->delete('authorizations/current', 'AuthorizationsController@destroy')->name('authorizations.destroy');
+        $api->delete('authorizations/current', 'AuthorizationController@destroy')->name('authorizations.destroy');
 
         //******************** 登录之后才能访问的接口 ********************
         Route::middleware('auth:api')->group(function ($api) {
@@ -59,13 +59,17 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
             $api->delete('cart-items/{productSku}', 'CartController@destroy')->name('cart-items.destroy');
 
             // 下单
-            $api->post('orders', 'OrdersController@store')->name('orders.store');
+            $api->post('orders', 'OrderController@store')->name('orders.store');
             // 订单列表
-            $api->get('orders', 'OrdersController@index')->name('orders.index');
+            $api->get('orders', 'OrderController@index')->name('orders.index');
             // 订单详情
-            $api->get('orders/{order}', 'OrdersController@show')->name('orders.show');
+            $api->get('orders/{order}', 'OrderController@show')->name('orders.show');
             // 删除订单
-            $api->delete('orders', 'OrdersController@destroy')->name('orders.destroy');
+            $api->delete('orders', 'OrderController@destroy')->name('orders.destroy');
+            // 订单确认收货
+            $api->post('orders/{order}/received', 'OrderController@received')->name('orders.received');
+            // 订单退款
+            $api->post('orders/{order}/apply-refund', 'OrderController@applyRefund')->name('orders.apply-refund');
 
             // 支付
             $api->get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
@@ -79,7 +83,7 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 });
 
 // 微信支付回调
-Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
+Route::post('payment/wechat/notify', 'Api\PaymentController@wechatNotify')->name('payment.wechat.notify');
 
 Route::fallback(function () {
     return response()->json(['message' => '404 Not Found. Please check your request url!'], HttpCodeEnum::HTTP_CODE_404);

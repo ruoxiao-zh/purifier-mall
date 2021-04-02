@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\HttpCodeEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductSku extends BaseModel
 {
@@ -11,7 +12,7 @@ class ProductSku extends BaseModel
 
     protected $fillable = ['title', 'description', 'price', 'stock'];
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

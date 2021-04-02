@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 class MessageCodeRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'phone' => [
@@ -15,7 +15,7 @@ class MessageCodeRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'phone' => '手机号',

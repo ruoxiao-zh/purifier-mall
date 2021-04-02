@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserAddress extends BaseModel
 {
@@ -21,7 +22,7 @@ class UserAddress extends BaseModel
 
     protected $dates = ['last_used_at'];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

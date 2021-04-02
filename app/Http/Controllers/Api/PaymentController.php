@@ -7,12 +7,17 @@ use App\Models\Order;
 use App\Enums\HttpCodeEnum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class PaymentController extends Controller
 {
     public function payByWechat(Order $order, Request $request)
     {
-        $this->authorize('own', $order);
+        try {
+            $this->authorize('own', $order);
+        } catch (AuthorizationException $e) {
+            abort(HttpCodeEnum::HTTP_CODE_401, '权限不足');
+        }
 
         if ($order->paid_at || $order->closed) {
             return response()->json(['message' => '订单状态不正确'], HttpCodeEnum::HTTP_CODE_500);

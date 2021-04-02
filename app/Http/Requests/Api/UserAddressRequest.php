@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 class UserAddressRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'province'      => 'required',
@@ -17,7 +17,7 @@ class UserAddressRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'province'      => '省',

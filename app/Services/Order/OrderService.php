@@ -9,6 +9,8 @@ use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class OrderService
 {
@@ -62,5 +64,14 @@ class OrderService
         });
 
         return $order;
+    }
+
+    public function checkAuthorize(Order $order): void
+    {
+        try {
+            Gate::authorize('own', $order);
+        } catch (AuthorizationException $e) {
+            abort($e->getCode(), '权限不足');
+        }
     }
 }

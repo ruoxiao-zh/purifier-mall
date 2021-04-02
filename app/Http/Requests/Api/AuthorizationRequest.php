@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 class AuthorizationRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'username' => 'required|string',
@@ -12,7 +12,7 @@ class AuthorizationRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'username' => '用户名',

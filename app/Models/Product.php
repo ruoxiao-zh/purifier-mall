@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ProductOnSaleStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends BaseModel
 {
@@ -18,7 +19,7 @@ class Product extends BaseModel
         'on_sale' => 'boolean',
     ];
 
-    public function skus()
+    public function skus(): HasMany
     {
         return $this->hasMany(ProductSku::class)->recent();
     }

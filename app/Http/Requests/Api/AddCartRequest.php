@@ -6,7 +6,7 @@ use App\Models\ProductSku;
 
 class AddCartRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'sku_id' => [
@@ -33,14 +33,14 @@ class AddCartRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'amount' => '商品数量',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'sku_id.required' => '请选择商品',

@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'address_id'     => [

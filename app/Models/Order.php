@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\HttpCodeEnum;
 use App\Enums\OrderRefundStatusEnum;
 use App\Enums\OrderShipStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends BaseModel
 {
@@ -66,12 +69,12 @@ class Order extends BaseModel
         });
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -80,7 +83,12 @@ class Order extends BaseModel
     {
         $prefix = date('YmdHis');
         for ($i = 0; $i < 10; $i++) {
-            $no = $prefix . str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            try {
+                $no = $prefix . str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            } catch (\Exception $e) {
+                abort(HttpCodeEnum::HTTP_CODE_500, 'generate order no failed');
+            }
+
             if ( !static::query()->where('no', $no)->exists()) {
                 return $no;
             }

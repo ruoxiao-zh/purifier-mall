@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class CartItem extends BaseModel
 {
     protected $fillable = ['amount'];
 
     public $timestamps = false;
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function productSku()
+    public function productSku(): BelongsTo
     {
         return $this->belongsTo(ProductSku::class);
     }

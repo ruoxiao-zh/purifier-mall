@@ -27,7 +27,7 @@ class MessageCodeController extends Controller
             ]);
         } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
             $message = $exception->getException('aliyun')->getMessage();
-            abort(500, $message ?: '短信发送异常');
+            abort(HttpCodeEnum::HTTP_CODE_500, $message ?: '短信发送异常');
         }
 
         $key = 'verificationCode_' . Str::random(15);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\HttpCodeEnum;
 use App\Models\UserAddress;
+use App\Services\UserAddress\UserAddressService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserAddressResource;
 use App\Http\Requests\Api\UserAddressRequest;
@@ -11,6 +13,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserAddressController extends Controller
 {
+    protected $userAddressService;
+
+    public function __construct()
+    {
+        $this->userAddressService = new UserAddressService();
+    }
+
     public function index(Request $request): JsonResource
     {
         return UserAddressResource::collection($request->user()->addresses);
@@ -38,7 +47,7 @@ class UserAddressController extends Controller
 
     public function update(UserAddressRequest $request, UserAddress $userAddress): JsonResource
     {
-        $this->authorize('own', $userAddress);
+        $this->userAddressService->checkAuthorize($userAddress);
 
         $userAddress->update($request->only([
             'province',
@@ -55,7 +64,7 @@ class UserAddressController extends Controller
 
     public function destroy(UserAddress $userAddress)
     {
-        $this->authorize('own', $userAddress);
+        $this->userAddressService->checkAuthorize($userAddress);
 
         $userAddress->delete();
 

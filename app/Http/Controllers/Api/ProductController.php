@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function show(Request $request, Product $product)
     {
         if ( !$product->on_sale) {
-            return response()->json(['message' => '商品未上架!'], HttpCodeEnum::HTTP_CODE_500);
+            abort(HttpCodeEnum::HTTP_CODE_500, '商品未上架');
         }
 
         return (new ProductResource($product))->showSkus();
