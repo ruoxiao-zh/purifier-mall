@@ -11,7 +11,7 @@ use App\Enums\OrderRefundStatusEnum;
 $factory->define(Order::class, function (Faker $faker) {
     $user = User::query()->inRandomOrder()->first();
 
-    $address = $user->addresses()->inRandomOrder()->first();
+    $address = $user->addresses->inRandomOrder()->first();
     // 10% 的概率把订单标记为退款
     $refund = random_int(0, 10) < 1;
     // 随机生成发货状态
@@ -19,7 +19,7 @@ $factory->define(Order::class, function (Faker $faker) {
 
     return [
         'address'        => [
-            'address'       => $address->full_address,
+            'address'       => $address->fullAddress,
             'zip'           => $address->zip,
             'contact_name'  => $address->contact_name,
             'contact_phone' => $address->contact_phone,
