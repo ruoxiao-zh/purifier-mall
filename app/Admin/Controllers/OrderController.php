@@ -10,18 +10,28 @@ use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
 use Encore\Admin\Layout\Content;
 use App\Enums\OrderShipStatusEnum;
+use App\Enums\OrderRefundStatusEnum;
+use App\Services\Order\OrderService;
 use Encore\Admin\Controllers\AdminController;
+use App\Http\Requests\Admin\HandleRefundRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class OrdersController extends AdminController
+class OrderController extends AdminController
 {
     use ValidatesRequests;
+
+    protected $orderService;
     /**
      * Title for current resource.
      *
      * @var string
      */
     protected $title = '订单';
+
+    public function __construct()
+    {
+        $this->orderService = new OrderService();
+    }
 
     /**
      * Make a grid builder.
@@ -91,5 +101,32 @@ class OrdersController extends AdminController
         ]);
 
         return redirect()->back();
+    }
+
+    public function handleRefund(Order $order, HandleRefundRequest $request)
+    {
+        if ($order->refund_status !== OrderRefundStatusEnum::REFUND_STATUS_APPLIED) {
+            abort(HttpCodeEnum::HTTP_CODE_500, '订单状态不正确');
+        }
+
+        if ($request->input('agree')) {
+            $extra = $order->extra ?: [];
+            unset($extra['refund_disagree_reason']);
+            $order->update([
+                'extra' => $extra,
+            ]);
+
+            $this->orderService->refundOrder($order);
+        } else {
+            $extra = $order->extra ?: [];
+            $extra['refund_disagree_reason'] = $request->input('reason');
+            // 将订单的退款状态改为未退款
+            $order->update([
+                'refund_status' => OrderRefundStatusEnum::REFUND_STATUS_PENDING,
+                'extra'         => $extra,
+            ]);
+        }
+
+        return $order;
     }
 }

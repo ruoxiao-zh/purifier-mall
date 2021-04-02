@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\FormRequest;
+
 class AuthorizationRequest extends FormRequest
 {
     public function rules(): array

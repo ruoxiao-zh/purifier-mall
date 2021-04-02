@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Enums\OrderRefundStatusEnum;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Jobs\CloseOrder;
@@ -22,7 +23,7 @@ class OrderService
             $address->update(['last_used_at' => Carbon::now()]);
 
             $order = new Order([
-                'address'      => [ // 将地址信息放入订单中
+                'address'      => [
                     'address'       => $address->full_address,
                     'zip'           => $address->zip,
                     'contact_name'  => $address->contact_name,
@@ -72,6 +73,34 @@ class OrderService
             Gate::authorize('own', $order);
         } catch (AuthorizationException $e) {
             abort($e->getCode(), '权限不足');
+        }
+    }
+
+    public function refundOrder(Order $order)
+    {
+        switch ($order->payment_method) {
+            case 'wechat':
+                $refundNo = Order::getAvailableRefundNo();
+
+                app('wechat_pay')->refund([
+                    'out_trade_no'  => $order->no,
+                    'total_fee'     => $order->total_amount * 100,
+                    'refund_fee'    => $order->total_amount * 100,
+                    'out_refund_no' => $refundNo,
+                    'notify_url'    => env('WECHAT_PAY_NOTIFY_URL'),
+                ]);
+
+                $order->update([
+                    'refund_no'     => $refundNo,
+                    'refund_status' => OrderRefundStatusEnum::REFUND_STATUS_PROCESSING,
+                ]);
+
+                break;
+            case 'alipay':
+                // todo
+                break;
+            default:
+                abort(HttpCodeEnum::HTTP_CODE_500, '未知订单支付方式');
         }
     }
 }

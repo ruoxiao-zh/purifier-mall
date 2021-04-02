@@ -8,7 +8,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Controllers\AdminController;
 
-class ProductsController extends AdminController
+class ProductController extends AdminController
 {
     /**
      * Title for current resource.

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Models\ProductSku;
+use App\Http\Requests\FormRequest;
 
 class AddCartRequest extends FormRequest
 {

@@ -28,8 +28,8 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         // 公司详情
         $api->get('companies/{company}', 'CompanyController@show')->name('companies.index');
         // 省钱小技巧
-        $api->get('make-money-tips', 'MakeMoneyTipController@index')->name('make-money-tips.index');
-        $api->get('make-money-tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make-money-tips.show');
+        $api->get('make_money_tips', 'MakeMoneyTipController@index')->name('make_money_tips.index');
+        $api->get('make_money_tips/{makeMoneyTip}', 'MakeMoneyTipController@show')->name('make_money_tips.show');
 
         // 商品列表
         $api->get('products', 'ProductController@index')->name('products.index');
@@ -49,14 +49,14 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         //******************** 登录之后才能访问的接口 ********************
         Route::middleware('auth:api')->group(function ($api) {
             // 用户地址
-            $api->resource('user-addresses', 'UserAddressController');
+            $api->resource('user_addresses', 'UserAddressController');
 
             // 购物车列表
-            $api->get('cart-items', 'CartController@index')->name('cart-items.index');
+            $api->get('cart_items', 'CartController@index')->name('cart_items.index');
             // 添加商品到购物车
-            $api->post('cart-items', 'CartController@store')->name('cart-items.store');
+            $api->post('cart_items', 'CartController@store')->name('cart_items.store');
             // 删除购物车里边的商品
-            $api->delete('cart-items/{productSku}', 'CartController@destroy')->name('cart-items.destroy');
+            $api->delete('cart_items/{productSku}', 'CartController@destroy')->name('cart_items.destroy');
 
             // 下单
             $api->post('orders', 'OrderController@store')->name('orders.store');
@@ -69,7 +69,7 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
             // 订单确认收货
             $api->post('orders/{order}/received', 'OrderController@received')->name('orders.received');
             // 订单退款
-            $api->post('orders/{order}/apply-refund', 'OrderController@applyRefund')->name('orders.apply-refund');
+            $api->post('orders/{order}/apply_refund', 'OrderController@applyRefund')->name('orders.apply_refund');
 
             // 支付
             $api->get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
@@ -78,12 +78,14 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 
     Route::middleware(['throttle:' . config('api.rate_limits.sign')])->group(function ($api) {
         // 短信
-        $api->post('message-codes', 'MessageCodeController@store')->name('message-codes.store');
+        $api->post('message_codes', 'MessageCodeController@store')->name('message_codes.store');
     });
 });
 
 // 微信支付回调
 Route::post('payment/wechat/notify', 'Api\PaymentController@wechatNotify')->name('payment.wechat.notify');
+// 微信退款回调
+Route::post('payment/wechat/refund_notify', 'Api\PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
 
 Route::fallback(function () {
     return response()->json(['message' => '404 Not Found. Please check your request url!'], HttpCodeEnum::HTTP_CODE_404);

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api;
 
 use App\Models\ProductSku;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\FormRequest;
 
 class OrderRequest extends FormRequest
 {

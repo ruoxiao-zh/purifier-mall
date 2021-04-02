@@ -24,9 +24,11 @@ Route::group([
     $router->post('editor/upload', 'EditorUploadImageController@upload');
 
     // 商品
-    $router->resource('products', ProductsController::class);
+    $router->resource('products', ProductController::class);
 
     // 订单
-    $router->post('orders/{order}/ship', 'OrdersController@ship')->name('orders.ship');
-    $router->resource('orders', OrdersController::class);
+    $router->post('orders/{order}/ship', 'OrderController@ship')->name('orders.ship');
+    $router->resource('orders', OrderController::class);
+    $router->post('orders/{order}/refund', 'OrderController@handleRefund')
+        ->name('admin.orders.handle_refund');
 });

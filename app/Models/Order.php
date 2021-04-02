@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Ramsey\Uuid\Uuid;
 use App\Enums\HttpCodeEnum;
 use App\Enums\OrderRefundStatusEnum;
 use App\Enums\OrderShipStatusEnum;
@@ -102,5 +103,18 @@ class Order extends BaseModel
     public function scopeLoadingWith($query)
     {
         return $query->with(['items.product', 'items.productSku']);
+    }
+
+    public static function getAvailableRefundNo(): string
+    {
+        do {
+            try {
+                $no = Uuid::uuid4()->getHex();
+            } catch (\Exception $e) {
+                abort(HttpCodeEnum::HTTP_CODE_500, 'find available refund no failed');
+            }
+        } while (self::query()->where('refund_no', $no)->exists());
+
+        return $no;
     }
 }
