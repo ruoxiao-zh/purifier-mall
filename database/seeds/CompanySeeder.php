@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 
 class CompanySeeder extends Seeder
@@ -11,6 +12,8 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Company::class)->times(1)->create();
+        if ( !Company::query()->find(1)) {
+            factory(Company::class)->times(1)->create();
+        }
     }
 }

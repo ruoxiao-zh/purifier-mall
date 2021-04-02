@@ -17,8 +17,9 @@ $factory->define(UserAddress::class, function (Faker $faker) {
     ];
     $address = $faker->randomElement($addresses);
 
+    $userIds = \App\Models\User::query()->pluck('id')->toArray();
     return [
-        'user_id'       => random_int(1, 100),
+        'user_id'       => array_rand($userIds),
         'province'      => $address[0],
         'city'          => $address[1],
         'district'      => $address[2],

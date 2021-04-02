@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Product;
+use App\Models\ProductSku;
 use Illuminate\Database\Seeder;
 
-class ProductsSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,9 +13,10 @@ class ProductsSeeder extends Seeder
      */
     public function run()
     {
-        $products = factory(\App\Models\Product::class)->times(300)->create();
+        $products = factory(Product::class)->times(300)->create();
+
         foreach ($products as $product) {
-            $skus = factory(\App\Models\ProductSku::class)->times(10)->create(['product_id' => $product->id]);
+            $skus = factory(ProductSku::class)->times(10)->create(['product_id' => $product->id]);
             $product->update(['price' => $skus->min('price')]);
         }
     }
