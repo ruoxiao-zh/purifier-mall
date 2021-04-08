@@ -15,9 +15,9 @@ class UserAddressController extends Controller
 {
     protected $userAddressService;
 
-    public function __construct()
+    public function __construct(UserAddressService $userAddressService)
     {
-        $this->userAddressService = new UserAddressService();
+        $this->userAddressService = $userAddressService;
     }
 
     public function index(Request $request): JsonResource

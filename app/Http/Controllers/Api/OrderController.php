@@ -17,9 +17,9 @@ class OrderController extends Controller
 {
     protected $orderService;
 
-    public function __construct()
+    public function __construct(OrderService $orderService)
     {
-        $this->orderService = new OrderService();
+        $this->orderService = $orderService;
     }
 
     public function store(OrderRequest $request): \Illuminate\Http\JsonResponse
