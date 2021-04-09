@@ -15,6 +15,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderController extends Controller
 {
+    /**
+     * @var OrderService
+     */
     protected $orderService;
 
     public function __construct(OrderService $orderService)

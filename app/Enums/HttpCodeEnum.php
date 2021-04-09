@@ -49,7 +49,7 @@ final class HttpCodeEnum extends Enum
     public const HTTP_CODE_401 = 401;
 
     /**
-     * 403 Forbidden - 服务器已经理解请求，但是拒绝执行它
+     * 403 Forbidden - 服务器已经理解请求，但是拒绝执行它, 用户授权失败抛出 authorizationexception
      */
     public const HTTP_CODE_403 = 403;
 

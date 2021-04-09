@@ -10,11 +10,13 @@ use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class OrderService
 {
+    use AuthorizesRequests;
+
     public function store(Request $request)
     {
         $user = $request->user();
@@ -70,9 +72,9 @@ class OrderService
     public function checkAuthorize(Order $order): void
     {
         try {
-            Gate::authorize('own', $order);
+            $this->authorize('own', $order);
         } catch (AuthorizationException $e) {
-            abort($e->getCode(), '权限不足');
+            abort(HttpCodeEnum::HTTP_CODE_403, '权限不足');
         }
     }
 

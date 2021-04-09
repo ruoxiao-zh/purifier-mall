@@ -4,10 +4,11 @@ namespace App\Services\WeChat;
 
 use EasyWeChat\Factory;
 use Illuminate\Http\Request;
+use EasyWeChat\MiniProgram\Application;
 
 class WeChatService
 {
-    private static $miniProgram = null;
+    private static $miniProgram;
 
     private function __construct()
     {
@@ -19,7 +20,7 @@ class WeChatService
         //...
     }
 
-    public static function miniProgram()
+    public static function miniProgram(): Application
     {
         if (is_null(self::$miniProgram)) {
             $config = [

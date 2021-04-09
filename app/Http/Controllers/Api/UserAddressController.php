@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\HttpCodeEnum;
 use App\Models\UserAddress;
-use App\Services\UserAddress\UserAddressService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserAddressResource;
 use App\Http\Requests\Api\UserAddressRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Services\UserAddress\UserAddressService;
 
 class UserAddressController extends Controller
 {
+    /**
+     * @var UserAddressService
+     */
     protected $userAddressService;
 
     public function __construct(UserAddressService $userAddressService)

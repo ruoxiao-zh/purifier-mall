@@ -47,7 +47,7 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
         $api->delete('authorizations/current', 'AuthorizationController@destroy')->name('authorizations.destroy');
 
         //******************** 登录之后才能访问的接口 ********************
-        Route::middleware('auth:api')->group(function ($api) {
+//        Route::middleware('auth:api')->group(function ($api) {
             // 用户地址
             $api->resource('user_addresses', 'UserAddressController');
 
@@ -73,7 +73,7 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 
             // 支付
             $api->get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
-        });
+//        });
     });
 
     Route::middleware(['throttle:' . config('api.rate_limits.sign')])->group(function ($api) {

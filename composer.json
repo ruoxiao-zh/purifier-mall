@@ -12,6 +12,7 @@
         "barryvdh/laravel-cors": "^2.0",
         "bensampo/laravel-enum": "~1.38",
         "codingyu/ueditor": "^3.0",
+        "doctrine/annotations": "^1.12",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.4",
         "hhxsv5/laravel-s": "^3.7",

@@ -7,6 +7,9 @@ use App\Services\WeChat\WeChatService;
 
 class MiniProgramService
 {
+    /**
+     * @var \EasyWeChat\MiniProgram\Application|null
+     */
     private $miniProgram;
 
     public function __construct()
