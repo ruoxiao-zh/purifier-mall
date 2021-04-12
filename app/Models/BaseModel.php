@@ -32,4 +32,21 @@ class BaseModel extends Model
     {
         return $query->orderBy('sort', 'desc');
     }
+
+    // protected function fireModelEvent($event, $halt = true)
+    // {
+    //     parent::fireModelEvent($event, $halt);
+
+    //     if ($event == "created") {
+    //         $this->afterCreate();
+    //     }
+
+    //     if ($event == "updated") {
+    //         $this->afterUpdate();
+    //     }
+
+    //     if ($event == "deleted") {
+    //         $this->afterDelete();
+    //     }
+    // }
 }
