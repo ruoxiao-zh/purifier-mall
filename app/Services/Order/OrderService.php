@@ -2,7 +2,6 @@
 
 namespace App\Services\Order;
 
-use App\Enums\OrderRefundStatusEnum;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Jobs\CloseOrder;
@@ -10,6 +9,7 @@ use App\Models\ProductSku;
 use App\Models\UserAddress;
 use App\Enums\HttpCodeEnum;
 use Illuminate\Http\Request;
+use App\Enums\OrderRefundStatusEnum;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -78,7 +78,7 @@ class OrderService
         }
     }
 
-    public function refundOrder(Order $order)
+    public function refundOrder(Order $order): void
     {
         switch ($order->payment_method) {
             case 'wechat':
