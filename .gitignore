@@ -13,4 +13,5 @@ yarn-error.log
 /.idea
 .DS_Store
 /resources/wechat_pay
-/storage/laravels.*
+/storage/laravels.conf
+/storage/laravels.pid
