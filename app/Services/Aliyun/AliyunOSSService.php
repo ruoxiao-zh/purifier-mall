@@ -11,11 +11,6 @@ class AliyunOSSService
 
     protected static $allowedExt = ["png", "jpg", "gif", 'jpeg', 'pdf'];
 
-    public function __construct()
-    {
-        self::$disk = Storage::disk('oss');
-    }
-
     protected static function getImageUploadPath($file): string
     {
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
@@ -31,19 +26,32 @@ class AliyunOSSService
     {
         $uploadImageFullName = self::getImageUploadPath($file);
 
-        $path = Storage::disk('oss')->put($uploadImageFullName, $file);
-
-        return self::signUrl($path, 300);
+        return Storage::disk('oss')->put($uploadImageFullName, $file);
     }
 
-    public static function signUrl(string $url, int $ttl): string
+    public static function signUrl(string $url, int $ttl, array $config = []): string
     {
-        return Storage::disk('oss')->signUrl($url, $ttl);
+        return Storage::disk('oss')->signUrl($url, $ttl, $config);
     }
 
-    public static function getLastModifiedTime(string $file)
+    public static function getTemporaryUrl(string $url, string $date): string
+    {
+        return Storage::disk('oss')->getTemporaryUrl($url, $date);
+    }
+
+    public static function exists(string $file): bool
+    {
+        return Storage::disk('oss')->has($file);
+    }
+
+    public static function getLastModifiedTime(string $file): int
     {
         return Storage::disk('oss')->lastModified($file);
+    }
+
+    public static function getLastModifiedTimestamp(string $file): string
+    {
+        return Storage::disk('oss')->getTimestamp($file);
     }
 
     public static function copyFile(string $oldFileName, string $newFileName): bool
