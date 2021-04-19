@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\HttpCodeEnum;
 use App\Models\UserAddress;
+use App\Services\Aliyun\AliyunOSSService;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserAddressResource;
 use App\Http\Requests\Api\UserAddressRequest;
@@ -71,5 +72,12 @@ class UserAddressController extends Controller
         $userAddress->delete();
 
         return response(null, HttpCodeEnum::HTTP_CODE_204);
+    }
+
+    public function upload(Request $request)
+    {
+        $file = $request->file('image');
+
+        return AliyunOSSService::upload2OSS($file);
     }
 }

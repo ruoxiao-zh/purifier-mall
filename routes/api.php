@@ -50,6 +50,8 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->middleware(['cors'])->gr
 //        Route::middleware('auth:api')->group(function ($api) {
             // 用户地址
             $api->resource('user_addresses', 'UserAddressController');
+            // 测试文件上传
+            $api->post('user_addresses/upload', 'UserAddressController@upload');
 
             // 购物车列表
             $api->get('cart_items', 'CartController@index')->name('cart_items.index');
