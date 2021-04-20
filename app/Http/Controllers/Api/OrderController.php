@@ -41,9 +41,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        return OrderResource::collection(Order::loadingWith()->where('user_id', $request->user()->id)
-            ->recent()
-            ->paginate());
+        return OrderResource::collection($this->orderService->getAll($request));
     }
 
     public function destroy(Order $order)

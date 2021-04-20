@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    use Filterable;
+
     protected $hidden = ['deleted_at'];
 
     protected $appends = [

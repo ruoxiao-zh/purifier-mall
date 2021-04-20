@@ -31,6 +31,7 @@
         "propaganistas/laravel-phone": "~4.2",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-tail": "^3.3",
+        "tucker-eric/eloquentfilter": "^2.4",
         "yansongda/laravel-pay": "^2.3"
     },
     "require-dev": {

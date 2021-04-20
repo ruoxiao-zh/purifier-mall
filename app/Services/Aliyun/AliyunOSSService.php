@@ -15,14 +15,14 @@ class AliyunOSSService
 
     protected static function getUploadPath(UploadedFile $file): string
     {
-        self::checkFileExtension($file);
+        static::checkFileExtension($file);
 
         return 'images/' . date('Y') . '/' . date('m') . '/' . date('d');
     }
 
     protected static function getSpecifyFilename(UploadedFile $file): string
     {
-        $extension = self::checkFileExtension($file);
+        $extension = static::checkFileExtension($file);
 
         return time() . random_int(10000, 99999) . '.' . $extension;
     }
@@ -31,7 +31,7 @@ class AliyunOSSService
     {
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
 
-        if ( !in_array($extension, self::$allowedExt)) {
+        if ( !in_array($extension, static::$allowedExt)) {
             abort(HttpCodeEnum::HTTP_CODE_500, '上传文件格式非法');
         }
 
@@ -40,15 +40,15 @@ class AliyunOSSService
 
     public static function upload2OSS(UploadedFile $file): string
     {
-        $uploadPath = self::getUploadPath($file);
+        $uploadPath = static::getUploadPath($file);
 
         return Storage::disk('oss')->put($uploadPath, $file);
     }
 
     public static function upload2OSSForSpecifyFilename(UploadedFile $file): string
     {
-        $uploadPath = self::getUploadPath($file);
-        $fileName = self::getSpecifyFilename($file);
+        $uploadPath = static::getUploadPath($file);
+        $fileName = static::getSpecifyFilename($file);
 
         return Storage::disk('oss')->putFileAs($uploadPath, $file, $fileName);
     }

@@ -105,4 +105,15 @@ class OrderService
                 abort(HttpCodeEnum::HTTP_CODE_500, '未知订单支付方式');
         }
     }
+
+    public function getAll(Request $request)
+    {
+        return Order::query()
+            ->filter($request->all())
+            ->loadingWith()
+            // ->where('user_id', $request->user()->id)
+            ->where('user_id', 1)
+            ->recent()
+            ->paginate();
+    }
 }
