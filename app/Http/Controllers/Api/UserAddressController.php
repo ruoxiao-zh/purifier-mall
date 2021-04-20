@@ -76,8 +76,9 @@ class UserAddressController extends Controller
 
     public function upload(Request $request)
     {
-        $file = $request->file('image');
+         $file = $request->file('image');
+//        $file = 'images/2021/04/20/0DLbZS0F6GkwS4UAgc34BgukcpYpguvZQdPKKvm6.jpg';
 
-        return AliyunOSSService::upload2OSS($file);
+        return AliyunOSSService::upload2OSSForSpecifyFilename($file);
     }
 }

@@ -3,15 +3,31 @@
 namespace App\Services\Aliyun;
 
 use App\Enums\HttpCodeEnum;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AliyunOSSService
 {
     protected static $disk;
 
-    protected static $allowedExt = ["png", "jpg", "gif", 'jpeg', 'pdf'];
+    protected static $allowedExt = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 
-    protected static function getImageUploadPath($file): string
+    protected static function getUploadPath(UploadedFile $file): string
+    {
+        self::checkFileExtension($file);
+
+        return 'images/' . date('Y') . '/' . date('m') . '/' . date('d');
+    }
+
+    protected static function getSpecifyFilename(UploadedFile $file): string
+    {
+        $extension = self::checkFileExtension($file);
+
+        return time() . random_int(10000, 99999) . '.' . $extension;
+    }
+
+    private static function checkFileExtension(UploadedFile $file): string
     {
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
 
@@ -19,53 +35,79 @@ class AliyunOSSService
             abort(HttpCodeEnum::HTTP_CODE_500, '上传文件格式非法');
         }
 
-        return 'images/' . date('Y') . '/' . date('m') . '/' . date('d');
+        return $extension;
     }
 
-    public static function upload2OSS($file): string
+    public static function upload2OSS(UploadedFile $file): string
     {
-        $uploadImageFullName = self::getImageUploadPath($file);
+        $uploadPath = self::getUploadPath($file);
 
-        return Storage::disk('oss')->put($uploadImageFullName, $file);
+        return Storage::disk('oss')->put($uploadPath, $file);
     }
 
-    public static function signUrl(string $url, int $ttl, array $config = []): string
+    public static function upload2OSSForSpecifyFilename(UploadedFile $file): string
     {
-        return Storage::disk('oss')->signUrl($url, $ttl, $config);
+        $uploadPath = self::getUploadPath($file);
+        $fileName = self::getSpecifyFilename($file);
+
+        return Storage::disk('oss')->putFileAs($uploadPath, $file, $fileName);
     }
 
-    public static function getTemporaryUrl(string $url, string $date): string
+    public static function signUrl(string $filePath, int $ttl, array $config = []): string
     {
-        return Storage::disk('oss')->getTemporaryUrl($url, $date);
+        return Storage::disk('oss')->signUrl($filePath, $ttl, $config);
     }
 
-    public static function exists(string $file): bool
+    public static function getTemporaryUrl(string $filePath, string $date): string
     {
-        return Storage::disk('oss')->has($file);
+        return Storage::disk('oss')->getTemporaryUrl($filePath, $date);
     }
 
-    public static function getLastModifiedTime(string $file): int
+    public static function exists(string $filePath): bool
     {
-        return Storage::disk('oss')->lastModified($file);
+        return Storage::disk('oss')->has($filePath);
     }
 
-    public static function getLastModifiedTimestamp(string $file): string
+    public static function getLastModifiedTime(string $filePath): int
     {
-        return Storage::disk('oss')->getTimestamp($file);
+        return Storage::disk('oss')->lastModified($filePath);
     }
 
-    public static function copyFile(string $oldFileName, string $newFileName): bool
+    public static function getLastModifiedTimestamp(string $filePath): string
     {
-        return Storage::disk('oss')->copy($oldFileName, $newFileName);
+        return Storage::disk('oss')->getTimestamp($filePath);
     }
 
-    public static function moveFile(string $oldFileName, string $newFileName): bool
+    public static function copyFile(string $oldFilePath, string $newFilePath): bool
     {
-        return Storage::disk('oss')->move($oldFileName, $newFileName);
+        return Storage::disk('oss')->copy($oldFilePath, $newFilePath);
     }
 
-    public static function getContents(string $file): string
+    public static function moveFile(string $oldFilePath, string $newFilePath): bool
     {
-        return Storage::disk('oss')->read($file);
+        return Storage::disk('oss')->move($oldFilePath, $newFilePath);
+    }
+
+    public static function getContents(string $filePath): string
+    {
+        return Storage::disk('oss')->read($filePath);
+    }
+
+    public static function deleteFromOSS($filePath): bool
+    {
+        if (self::exists($filePath)) {
+            return Storage::disk('oss')->delete($filePath);
+        }
+
+        return true;
+    }
+
+    public static function downloadFromOSS($filePath): StreamedResponse
+    {
+        if ( !self::exists($filePath)) {
+            abort(HttpCodeEnum::HTTP_CODE_500, '文件不存在');
+        }
+
+        return Storage::disk('oss')->download($filePath);
     }
 }
